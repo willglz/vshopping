@@ -35,5 +35,6 @@ public class OrderDAO {
         o.setCustomer(order.getCustomer());
         o.setShipping(order.getShipping());
         o.setGames(order.getGames());
+        o.setEmployee(order.getEmployee());
     }
 }

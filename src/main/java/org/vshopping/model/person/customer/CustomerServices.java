@@ -17,16 +17,31 @@ public class CustomerServices {
         return "Customer edited successfully";
     }
 
-    public List<Person> showCustomer(){
+    public String listCustomer(){
+        StringBuilder sbCustomers = new StringBuilder();
+        for (Person showCustomer : this.customerDAO.getPerson()) {
+            sbCustomers.append(showCustomer.toString());
+        }
+        return sbCustomers.toString();
+    }
+
+    public List<Person> getCustomers(){
         return this.customerDAO.getPerson();
     }
 
     public Customer findCustomerById(int id){
-        return (Customer) this.customerDAO.searchPersonById(id);
+        Customer c = null;
+        for (Person person : this.getCustomers()) {
+            if (person != null && person.getId() == id){
+                c = (Customer) person;
+                break;
+            }
+        }
+        return c;
     }
 
-    public String deleteCustomer(int id){
-        this.customerDAO.deletePerson(id);
+    public String deleteCustomer(Person person){
+        this.customerDAO.deletePerson(person);
         return "Customer deleted successfully";
     }
 }

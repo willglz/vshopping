@@ -12,35 +12,24 @@ public class EmployeeDAO implements PersonDAO {
     }
 
     @Override
-    public Person searchPersonById(int id) {
-        Employee e = null;
-        for (Person person : EmployeeDB.getDataSource()) {
-            if (person != null && person.getId() == id){
-                e = (Employee) person;
-                break;
-            }
-        }
-        return e;
-    }
-
-    @Override
     public List<Person> getPerson() {
         return EmployeeDB.getDataSource();
     }
 
     @Override
-    public void deletePerson(int id) {
-        EmployeeDB.getDataSource().remove(this.searchPersonById(id));
+    public void deletePerson(Person person) {
+        EmployeeDB.getDataSource().remove(person);
     }
 
     @Override
     public void editPerson(Person person) {
-        Employee e = (Employee) this.searchPersonById(person.getId());
+        Employee e = (Employee) person;
         e.setFirstName(person.getFirstName());
         e.setLastName(person.getLastName());
         e.setAddress(person.getAddress());
         e.setEmail(person.getEmail());
         e.setRole(((Employee) person).getRole());
-        e.setSalary(((Employee) person).getSalary());
+        e.setUser(((Employee) person).getUser());
+        e.setPassword(((Employee) person).getPassword());
     }
 }

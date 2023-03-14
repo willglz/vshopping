@@ -43,5 +43,6 @@ public class vGamesDAO implements ProductDAO {
         v.setPrice(products.getPrice());
         v.setPlatform(((vGames) products).getPlatform());
         v.setGenre(((vGames) products).getGenre());
+        v.setStock(((vGames) products).getStock());
     }
 }

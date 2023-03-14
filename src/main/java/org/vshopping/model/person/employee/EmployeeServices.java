@@ -7,6 +7,11 @@ import java.util.List;
 public class EmployeeServices {
     private EmployeeDAO employeeDAO = new EmployeeDAO();
     public String addEmployee(Employee employee){
+        for (Person person: this.showEmployees()){
+            if (((Employee) person).getUser().equals(employee.getUser())){
+                return "This user is already in use";
+            }
+        }
         this.employeeDAO.savePerson(employee);
         return "Employee added successfully";
     }
@@ -21,11 +26,43 @@ public class EmployeeServices {
     }
 
     public Employee findEmployeeById(int id){
-        return (Employee) this.employeeDAO.searchPersonById(id);
+        Employee e = null;
+        for (Person person : this.showEmployees()) {
+            if (person != null && person.getId() == id){
+                e = (Employee) person;
+                break;
+            }
+        }
+        return e;
     }
 
-    public String deleteEmployee(int id){
-        this.employeeDAO.deletePerson(id);
+    public Employee findEmployeeByUser(String user){
+        Employee e = null;
+        for (Person person : this.showEmployees()) {
+            if (person != null && ((Employee) person).getUser().equals(user)){
+                e = (Employee) person;
+                break;
+            }
+        }
+        return e;
+    }
+
+    public String deleteEmployee(Person person){
+        this.employeeDAO.deletePerson(person);
         return "Employee deleted successfully";
+    }
+
+    public boolean verifyEmployee(){
+        return this.employeeDAO.getPerson().isEmpty();
+    }
+
+    public boolean logInEmployee(String user, String pass){
+        for (Person person: this.showEmployees()){
+            if (((Employee ) person).getUser().equals(user) &&
+                    ((Employee ) person).getPassword().equals(pass)){
+                return true;
+            }
+        }
+        return false;
     }
 }

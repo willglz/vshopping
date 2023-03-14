@@ -3,7 +3,10 @@ package org.vshopping.model.order;
 import lombok.Getter;
 import lombok.Setter;
 import org.vshopping.model.person.customer.Customer;
+import org.vshopping.model.person.employee.Employee;
 import org.vshopping.model.product.videogames.vGames;
+
+import java.util.Date;
 
 public class Order {
     @Getter
@@ -15,11 +18,17 @@ public class Order {
     private vGames games;
     @Getter @Setter
     private Shipping shipping;
+    @Getter @Setter
+    private Employee employee;
 
-    public Order(Customer customer, vGames games, Shipping shipping) {
+    private Date date;
+
+    public Order(Customer customer, vGames games, Shipping shipping, Employee employee, Date date) {
         this.customer = customer;
         this.games = games;
         this.shipping = shipping;
+        this.employee = employee;
+        this.date = date;
         this.id = ++lastId;
     }
 }

@@ -40,9 +40,7 @@ public class CustomerCommand implements Command{
                     System.out.println(cServices.addCustomer(customer));
                     break;
                 case "2":
-                    for (Person showCustomer : cServices.showCustomer()) {
-                        System.out.println(showCustomer);
-                    }
+                    System.out.println(cServices.listCustomer());
                     break;
                 case "3":
                     System.out.println("Enter the employee ID to search");
@@ -55,7 +53,7 @@ public class CustomerCommand implements Command{
                 case "4":
                     System.out.println("Enter the Customer ID to modify");
                     int idCus = sc.nextInt();
-                    for(Person p: cServices.showCustomer()){
+                    for(Person p: cServices.getCustomers()){
                         if (p != null && p.getId() == idCus){
                             sc.nextLine();
                             System.out.println(cServices.findCustomerById(idCus));
@@ -76,9 +74,9 @@ public class CustomerCommand implements Command{
                 case "5":
                     System.out.println("Enter the Customer ID to delete");
                     int idCustoDelete = sc.nextInt();
-                    for(Person p: cServices.showCustomer()){
+                    for(Person p: cServices.getCustomers()){
                         if (p != null && p.getId() == idCustoDelete){
-                            System.out.println(cServices.deleteCustomer(idCustoDelete));
+                            System.out.println(cServices.deleteCustomer(p));
                             break;
                         }
                     }

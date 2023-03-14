@@ -12,17 +12,21 @@ public class vGames extends Product {
     private String platform;
     @Getter @Setter
     private String genre;
+    @Getter @Setter
+    private int stock;
 
-    public vGames(String name, String price, String platform, String genre) {
+    public vGames(String name, String price, String platform, String genre, int stock) {
         super(name, price);
         this.platform = platform;
         this.genre = genre;
+        this.stock = stock;
     }
 
-    public vGames(int id, String name, String price, String platform, String genre) {
+    public vGames(int id, String name, String price, String platform, String genre, int stock) {
         super(name, price);
         this.platform = platform;
         this.id = id;
         this.genre = genre;
+        this.stock = stock;
     }
 }

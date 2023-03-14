@@ -12,30 +12,18 @@ public class CustomerDAO implements PersonDAO {
     }
 
     @Override
-    public Person searchPersonById(int id) {
-        Customer c = null;
-        for (Person person : CustomerDB.getDataSource()) {
-            if (person != null && person.getId() == id){
-                c = (Customer) person;
-                break;
-            }
-        }
-        return c;
-    }
-
-    @Override
     public List<Person> getPerson() {
         return CustomerDB.getDataSource();
     }
 
     @Override
-    public void deletePerson(int id) {
-        CustomerDB.getDataSource().remove(this.searchPersonById(id));
+    public void deletePerson(Person person) {
+        CustomerDB.getDataSource().remove(person);
     }
 
     @Override
     public void editPerson(Person person) {
-        Customer c = (Customer) this.searchPersonById(person.getId());
+        Customer c = (Customer) person;
         c.setFirstName(person.getFirstName());
         c.setLastName(person.getLastName());
         c.setAddress(person.getAddress());

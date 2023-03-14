@@ -38,9 +38,11 @@ public class EmployeeCommand implements Command{
                     String mail = sc.nextLine();
                     System.out.print("Role: ");
                     String rol = sc.nextLine();
-                    System.out.print("Base Salary: ");
-                    double sal = sc.nextDouble();
-                    Employee employee = new Employee(fn, ln, ad, mail, rol, sal);
+                    System.out.print("User: ");
+                    String user = sc.nextLine();
+                    System.out.print("Password: ");
+                    String pass = sc.nextLine();
+                    Employee employee = new Employee(fn, ln, ad, mail, user, pass, rol);
                     System.out.println(eServices.addEmployee(employee));
                     break;
                 case "2":
@@ -74,9 +76,11 @@ public class EmployeeCommand implements Command{
                             String mail2m = sc.nextLine();
                             System.out.print("Role: ");
                             String rol2m = sc.nextLine();
-                            System.out.print("Base Salary: ");
-                            double sal2m = sc.nextDouble();
-                            p = new Employee(idEmp ,fn2m, ln2m, ad2m, mail2m, rol2m, sal2m);
+                            System.out.print("User: ");
+                            String user2m = sc.nextLine();
+                            System.out.print("Password: ");
+                            String pass2m = sc.nextLine();
+                            p = new Employee(idEmp ,fn2m, ln2m, ad2m, mail2m, user2m, pass2m, rol2m);
                             System.out.println(eServices.editEmployee((Employee) p));
                         }
                     }
@@ -86,7 +90,7 @@ public class EmployeeCommand implements Command{
                     int idEmptoDelete = sc.nextInt();
                     for(Person p: eServices.showEmployees()){
                         if (p != null && p.getId() == idEmptoDelete){
-                            System.out.println(eServices.deleteEmployee(idEmptoDelete));
+                            System.out.println(eServices.deleteEmployee(p));
                             break;
                         }
                     }

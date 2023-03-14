@@ -1,5 +1,6 @@
 package org.vshopping.model.product.videogames;
 
+import org.vshopping.model.person.Person;
 import org.vshopping.model.product.Product;
 
 import java.util.List;
@@ -15,6 +16,14 @@ public class vGamesServices {
     public String editGame(vGames vGames){
         GAMES_DAO.editProduct(vGames);
         return "Game edited successfully";
+    }
+
+    public String listGames(){
+        StringBuilder sbGames = new StringBuilder();
+        for (Product Games : this.showGames()) {
+            sbGames.append(Games.toString());
+        }
+        return sbGames.toString();
     }
 
     public List<Product> showGames(){

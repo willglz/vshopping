@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface PersonDAO {
     void savePerson(Person person);
-    Person searchPersonById(int id);
     List<Person> getPerson();
-    void deletePerson(int id);
+    void deletePerson(Person person);
     void editPerson(Person person);
 }
