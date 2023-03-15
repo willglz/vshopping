@@ -44,7 +44,7 @@ public class CustomerCommand implements Command{
                     break;
                 case "3":
                     System.out.println("Enter the employee ID to search");
-                    int idCusToS = sc.nextInt();
+                    String idCusToS = sc.nextLine();
                     if (cServices.findCustomerById(idCusToS) != null){
                         System.out.println(cServices.findCustomerById(idCusToS));
                     }
@@ -56,7 +56,7 @@ public class CustomerCommand implements Command{
                     for(Person p: cServices.getCustomers()){
                         if (p != null && p.getId() == idCus){
                             sc.nextLine();
-                            System.out.println(cServices.findCustomerById(idCus));
+                            System.out.println(cServices.findCustomerById(String.valueOf(idCus)));
                             System.out.println("Customer found!!\nEnter de new data for this customer");
                             System.out.print("First name: ");
                             String fn2m = sc.nextLine();
@@ -73,13 +73,14 @@ public class CustomerCommand implements Command{
                     break;
                 case "5":
                     System.out.println("Enter the Customer ID to delete");
-                    int idCustoDelete = sc.nextInt();
+                    String idCusToDelete = sc.nextLine();
                     for(Person p: cServices.getCustomers()){
-                        if (p != null && p.getId() == idCustoDelete){
+                        if (p != null && p.getId() == Integer.parseInt(idCusToDelete)){
                             System.out.println(cServices.deleteCustomer(p));
                             break;
                         }
                     }
+                    System.out.println("Customer doesn't exist");
                     break;
                 default:
                     System.out.println("Wrong option");

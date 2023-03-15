@@ -23,7 +23,8 @@ public class CustomerDAO implements PersonDAO {
 
     @Override
     public void editPerson(Person person) {
-        Customer c = (Customer) person;
+        CustomerServices temp = new CustomerServices();
+        Customer c = temp.findCustomerById(String.valueOf(person.getId()));
         c.setFirstName(person.getFirstName());
         c.setLastName(person.getLastName());
         c.setAddress(person.getAddress());

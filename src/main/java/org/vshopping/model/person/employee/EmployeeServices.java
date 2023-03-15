@@ -21,14 +21,23 @@ public class EmployeeServices {
         return "Employee edited successfully";
     }
 
+    public String listCustomer(){
+        StringBuilder sbEmployees = new StringBuilder("No customers to show you");
+        for (Person employee : this.showEmployees()) {
+            sbEmployees.delete(0,24);
+            sbEmployees.append(employee.toString());
+        }
+        return sbEmployees.toString();
+    }
+
     public List<Person> showEmployees(){
         return this.employeeDAO.getPerson();
     }
 
-    public Employee findEmployeeById(int id){
+    public Employee findEmployeeById(String id){
         Employee e = null;
         for (Person person : this.showEmployees()) {
-            if (person != null && person.getId() == id){
+            if (person != null && person.getId() == Integer.parseInt(id)){
                 e = (Employee) person;
                 break;
             }

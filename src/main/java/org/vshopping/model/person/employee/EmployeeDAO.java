@@ -23,7 +23,8 @@ public class EmployeeDAO implements PersonDAO {
 
     @Override
     public void editPerson(Person person) {
-        Employee e = (Employee) person;
+        EmployeeServices temp = new EmployeeServices();
+        Employee e = temp.findEmployeeById(String.valueOf(person.getId()));
         e.setFirstName(person.getFirstName());
         e.setLastName(person.getLastName());
         e.setAddress(person.getAddress());

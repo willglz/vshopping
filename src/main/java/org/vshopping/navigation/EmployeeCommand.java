@@ -46,13 +46,11 @@ public class EmployeeCommand implements Command{
                     System.out.println(eServices.addEmployee(employee));
                     break;
                 case "2":
-                    for (Person showEmployee : eServices.showEmployees()) {
-                        System.out.println(showEmployee);
-                    }
+                    System.out.println(eServices.listCustomer());
                     break;
                 case "3":
                     System.out.println("Enter the employee ID to search");
-                    int idEmpToS = sc.nextInt();
+                    String idEmpToS = sc.nextLine();
                     if (eServices.findEmployeeById(idEmpToS) != null){
                         System.out.println(eServices.findEmployeeById(idEmpToS));
                     }
@@ -64,7 +62,7 @@ public class EmployeeCommand implements Command{
                     for(Person p: eServices.showEmployees()){
                         if (p != null && p.getId() == idEmp){
                             sc.nextLine();
-                            System.out.println(eServices.findEmployeeById(idEmp));
+                            System.out.println(eServices.findEmployeeById(String.valueOf(idEmp)));
                             System.out.println("Employee found!!\nEnter de new data for this employee");
                             System.out.print("First name: ");
                             String fn2m = sc.nextLine();

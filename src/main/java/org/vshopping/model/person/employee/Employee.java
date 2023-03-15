@@ -1,10 +1,11 @@
 package org.vshopping.model.person.employee;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.vshopping.model.person.Person;
 
-import java.util.Objects;
+@EqualsAndHashCode
 
 public class Employee extends Person {
     @Getter
@@ -49,18 +50,5 @@ public class Employee extends Person {
         details += "\nRole: " + this.role;
         details += "\n---------------------";
         return details;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

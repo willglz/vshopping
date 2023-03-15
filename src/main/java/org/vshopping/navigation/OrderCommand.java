@@ -1,11 +1,13 @@
 package org.vshopping.navigation;
 
-import org.vshopping.model.order.OrderServices;
+import org.vshopping.model.order.*;
 import org.vshopping.model.person.Person;
 import org.vshopping.model.person.customer.CustomerServices;
 import org.vshopping.model.person.employee.Employee;
+import org.vshopping.model.person.employee.EmployeeServices;
 import org.vshopping.model.product.videogames.vGamesServices;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class OrderCommand implements Command{
@@ -14,6 +16,7 @@ public class OrderCommand implements Command{
         OrderServices oServices = new OrderServices();
         CustomerServices cServices = new CustomerServices();
         vGamesServices vServices = new vGamesServices();
+        EmployeeServices eServices = new EmployeeServices();
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("=== ORDER ===");
@@ -32,38 +35,74 @@ public class OrderCommand implements Command{
 
             switch (opt) {
                 case "1":
+                    Shipping shipping = null;
                     System.out.println(cServices.listCustomer());
                     System.out.println("Enter the Customer ID: ");
                     int idC = sc.nextInt();
-                    System.out.println(vServices.listGames());
+                    System.out.println(vServices.listAvailableGames());
                     System.out.print("Enter the Game ID: ");
                     int idG = sc.nextInt();
-                    System.out.print("Last name: ");
-                    String ln = sc.nextLine();
-                    System.out.print("Address: ");
-                    String ad = sc.nextLine();
-                    System.out.print("Email: ");
-                    String mail = sc.nextLine();
-                    System.out.print("Role: ");
-                    String rol = sc.nextLine();
-                    System.out.print("Base Salary: ");
-                    double sal = sc.nextDouble();
+                    vServices.findGameById(String.valueOf(idG)).setStock(vServices.findGameById(String.valueOf(idG)).getStock() - 1);
+                    System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
+                    int delOpt = sc.nextInt();
+                    if (delOpt == 1){
+                        shipping = new Ground();
+                    }
+                    Order order = new Order(cServices.findCustomerById(String.valueOf(idC)), vServices.findGameById(String.valueOf(idG)),
+                            shipping, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())), new Date());
+                    System.out.println(oServices.addOrder(order));
                     break;
                 case "2":
+                    System.out.println(oServices.listOrders());
                     break;
                 case "3":
-                    System.out.println("Enter the employee ID to search");
-                    int idEmpToS = sc.nextInt();
-                    System.out.println("Employee doesn't exist");
+                    System.out.println("Enter the order ID to search");
+                    String idOrdToS = sc.nextLine();
+                    if (oServices.findOrderById(idOrdToS) != null){
+                        System.out.println(oServices.findOrderById(idOrdToS));
+                    }
+                    System.out.println("Order doesn't exist");
                     break;
                 case "4":
-                    System.out.println("Enter the employee ID to modify");
-                    int idEmp = sc.nextInt();
+                    System.out.println("Enter the order ID to modify");
+                    int idOrd = sc.nextInt();
+                    for(Order o: oServices.showOrders()){
+                        if (o != null && o.getId() == idOrd){
+                            sc.nextLine();
+                            System.out.println(oServices.findOrderById(String.valueOf(idOrd)));
+                            System.out.println("Order found!!\nEnter de new data for this order");
+                            Shipping shipping2m = null;
+                            System.out.println(cServices.listCustomer());
+                            System.out.println("Enter the Customer ID: ");
+                            int idC2m = sc.nextInt();
+                            System.out.println(vServices.listAvailableGames());
+                            System.out.print("Enter the Game ID: ");
+                            int idG2m = sc.nextInt();
+                            System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
+                            int delOpt2 = sc.nextInt();
+                            if (delOpt2 == 1){
+                                shipping2m = new Ground();
+                            }
+                            o = new Order(idOrd , cServices.findCustomerById(String.valueOf(idC2m)),
+                                    vServices.findGameById(String.valueOf(idG2m)),
+                                    shipping2m, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())),
+                                    new Date());
+                            System.out.println(oServices.editOrder(o));
+                        }
+                    }
                     break;
                 case "5":
+                    System.out.println("Enter the Order ID to delete");
+                    int idOrdDelete = sc.nextInt();
+                    for(Order o: oServices.showOrders()){
+                        if (o != null && o.getId() == idOrdDelete){
+                            System.out.println(oServices.deleteOrder(o));
+                            break;
+                        }
+                    }
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    System.out.println("Wrong option");
                     break;
             }
         }

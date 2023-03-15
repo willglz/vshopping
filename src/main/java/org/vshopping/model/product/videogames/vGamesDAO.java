@@ -15,30 +15,19 @@ public class vGamesDAO implements ProductDAO {
     }
 
     @Override
-    public Product searchProductById(int id) {
-        vGames v = null;
-        for (Product product : vGamesDB.getDataSource()) {
-            if (product != null && product.getId() == id){
-                v = (vGames) product;
-                break;
-            }
-        }
-        return v;
-    }
-
-    @Override
     public List<Product> getProducts() {
         return vGamesDB.getDataSource();
     }
 
     @Override
-    public void deleteProduct(int id) {
-        vGamesDB.getDataSource().remove(this.searchProductById(id));
+    public void deleteProduct(Product product) {
+        vGamesDB.getDataSource().remove(product);
     }
 
     @Override
     public void editProduct(Product products) {
-        vGames v = (vGames) this.searchProductById(products.getId());
+        vGamesServices temp = new vGamesServices();
+        vGames v = temp.findGameById(String.valueOf(products.getId()));
         v.setName(products.getName());
         v.setPrice(products.getPrice());
         v.setPlatform(((vGames) products).getPlatform());

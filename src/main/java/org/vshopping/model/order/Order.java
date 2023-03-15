@@ -20,7 +20,7 @@ public class Order {
     private Shipping shipping;
     @Getter @Setter
     private Employee employee;
-
+    @Getter @Setter
     private Date date;
 
     public Order(Customer customer, vGames games, Shipping shipping, Employee employee, Date date) {
@@ -30,5 +30,26 @@ public class Order {
         this.employee = employee;
         this.date = date;
         this.id = ++lastId;
+    }
+
+    public Order(int id, Customer customer, vGames games, Shipping shipping, Employee employee, Date date) {
+        this.customer = customer;
+        this.games = games;
+        this.shipping = shipping;
+        this.employee = employee;
+        this.date = date;
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        String details = "---------------------";
+        details += "\nOrder ID: " + this.id;
+        details += "\nCustomer: " + this.customer.getFirstName() + " " + this.customer.getLastName();
+        details += "\nGame: " + this.games.getName();
+        details += "\nShipping: " + this.shipping;
+        details += "\nDate: " + this.getDate();
+        details += "\n---------------------";
+        return details;
     }
 }

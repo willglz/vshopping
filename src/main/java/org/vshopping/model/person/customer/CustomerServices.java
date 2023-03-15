@@ -1,11 +1,14 @@
 package org.vshopping.model.person.customer;
 
+import org.vshopping.model.order.Order;
+import org.vshopping.model.order.OrderServices;
 import org.vshopping.model.person.Person;
 
 import java.util.List;
 
 public class CustomerServices {
     private CustomerDAO customerDAO = new CustomerDAO();
+    private OrderServices oServices = new OrderServices();
 
     public String addCustomer(Customer customer){
         this.customerDAO.savePerson(customer);
@@ -18,8 +21,9 @@ public class CustomerServices {
     }
 
     public String listCustomer(){
-        StringBuilder sbCustomers = new StringBuilder();
+        StringBuilder sbCustomers = new StringBuilder("No customers to show you");
         for (Person showCustomer : this.customerDAO.getPerson()) {
+            sbCustomers.delete(0,25);
             sbCustomers.append(showCustomer.toString());
         }
         return sbCustomers.toString();
@@ -29,10 +33,10 @@ public class CustomerServices {
         return this.customerDAO.getPerson();
     }
 
-    public Customer findCustomerById(int id){
+    public Customer findCustomerById(String id){
         Customer c = null;
         for (Person person : this.getCustomers()) {
-            if (person != null && person.getId() == id){
+            if (person != null && person.getId() == Integer.parseInt(id)){
                 c = (Customer) person;
                 break;
             }
@@ -41,6 +45,11 @@ public class CustomerServices {
     }
 
     public String deleteCustomer(Person person){
+        for (Order o: oServices.showOrders()){
+            if (person.equals(o.getCustomer())){
+                return "Cannot delete this customer 'cause is in an active order";
+            }
+        }
         this.customerDAO.deletePerson(person);
         return "Customer deleted successfully";
     }

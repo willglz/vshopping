@@ -1,8 +1,9 @@
 package org.vshopping.model.product;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
+@EqualsAndHashCode
 public abstract class Product {
     @Getter @Setter
     private int id;
@@ -10,9 +11,9 @@ public abstract class Product {
     @Setter @Getter
     private String name;
     @Setter @Getter
-    private String price;
+    private double price;
 
-    public Product(String name, String price) {
+    public Product(String name, double price) {
         this.name = name;
         this.price = price;
         this.id = ++lastId;
