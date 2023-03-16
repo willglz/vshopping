@@ -36,21 +36,25 @@ public class OrderCommand implements Command{
             switch (opt) {
                 case "1":
                     Shipping shipping = null;
-                    System.out.println(cServices.listCustomer());
-                    System.out.println("Enter the Customer ID: ");
-                    int idC = sc.nextInt();
-                    System.out.println(vServices.listAvailableGames());
-                    System.out.print("Enter the Game ID: ");
-                    int idG = sc.nextInt();
-                    vServices.findGameById(String.valueOf(idG)).setStock(vServices.findGameById(String.valueOf(idG)).getStock() - 1);
-                    System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
-                    int delOpt = sc.nextInt();
-                    if (delOpt == 1){
-                        shipping = new Ground();
+                    if (!(vServices.verifyGames() || cServices.verifyCustomers())){
+                        System.out.println(cServices.listCustomer());
+                        System.out.println("Enter the Customer ID: ");
+                        int idC = sc.nextInt();
+                        System.out.println(vServices.listAvailableGames());
+                        System.out.print("Enter the Game ID: ");
+                        int idG = sc.nextInt();
+                        vServices.findGameById(String.valueOf(idG)).setStock(vServices.findGameById(String.valueOf(idG)).getStock() - 1);
+                        System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
+                        int delOpt = sc.nextInt();
+                        if (delOpt == 1){
+                            shipping = new Ground();
+                        }
+                        Order order = new Order(cServices.findCustomerById(String.valueOf(idC)), vServices.findGameById(String.valueOf(idG)),
+                                shipping, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())), new Date());
+                        System.out.println(oServices.addOrder(order));
+                    }else {
+                        System.out.println("No customers or games to book");
                     }
-                    Order order = new Order(cServices.findCustomerById(String.valueOf(idC)), vServices.findGameById(String.valueOf(idG)),
-                            shipping, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())), new Date());
-                    System.out.println(oServices.addOrder(order));
                     break;
                 case "2":
                     System.out.println(oServices.listOrders());
@@ -58,48 +62,61 @@ public class OrderCommand implements Command{
                 case "3":
                     System.out.println("Enter the order ID to search");
                     String idOrdToS = sc.nextLine();
-                    if (oServices.findOrderById(idOrdToS) != null){
-                        System.out.println(oServices.findOrderById(idOrdToS));
+                    try {
+                        if (oServices.findOrderById(idOrdToS) != null){
+                            System.out.println(oServices.findOrderById(idOrdToS));
+                        }
+                    }catch (NumberFormatException e){
+                        System.out.println("Wrong ID");
                     }
                     System.out.println("Order doesn't exist");
                     break;
                 case "4":
                     System.out.println("Enter the order ID to modify");
-                    int idOrd = sc.nextInt();
+                    String idOrd = sc.nextLine();
                     for(Order o: oServices.showOrders()){
-                        if (o != null && o.getId() == idOrd){
-                            sc.nextLine();
-                            System.out.println(oServices.findOrderById(String.valueOf(idOrd)));
-                            System.out.println("Order found!!\nEnter de new data for this order");
-                            Shipping shipping2m = null;
-                            System.out.println(cServices.listCustomer());
-                            System.out.println("Enter the Customer ID: ");
-                            int idC2m = sc.nextInt();
-                            System.out.println(vServices.listAvailableGames());
-                            System.out.print("Enter the Game ID: ");
-                            int idG2m = sc.nextInt();
-                            System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
-                            int delOpt2 = sc.nextInt();
-                            if (delOpt2 == 1){
-                                shipping2m = new Ground();
+                        try {
+                            if (o != null && o.getId() == Integer.parseInt(idOrd)){
+                                sc.nextLine();
+                                System.out.println(oServices.findOrderById(idOrd));
+                                System.out.println("Order found!!\nEnter de new data for this order");
+                                Shipping shipping2m = null;
+                                System.out.println(cServices.listCustomer());
+                                System.out.println("Enter the Customer ID: ");
+                                int idC2m = sc.nextInt();
+                                System.out.println(vServices.listAvailableGames());
+                                System.out.print("Enter the Game ID: ");
+                                int idG2m = sc.nextInt();
+                                System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
+                                int delOpt2 = sc.nextInt();
+                                if (delOpt2 == 1){
+                                    shipping2m = new Ground();
+                                }
+                                o = new Order(Integer.parseInt(idOrd) , cServices.findCustomerById(String.valueOf(idC2m)),
+                                        vServices.findGameById(String.valueOf(idG2m)),
+                                        shipping2m, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())),
+                                        new Date());
+                                System.out.println(oServices.editOrder(o));
                             }
-                            o = new Order(idOrd , cServices.findCustomerById(String.valueOf(idC2m)),
-                                    vServices.findGameById(String.valueOf(idG2m)),
-                                    shipping2m, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())),
-                                    new Date());
-                            System.out.println(oServices.editOrder(o));
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
                         }
                     }
                     break;
                 case "5":
                     System.out.println("Enter the Order ID to delete");
-                    int idOrdDelete = sc.nextInt();
+                    String idOrdDelete = sc.nextLine();
                     for(Order o: oServices.showOrders()){
-                        if (o != null && o.getId() == idOrdDelete){
-                            System.out.println(oServices.deleteOrder(o));
-                            break;
+                        try {
+                            if (o != null && o.getId() == Integer.parseInt(idOrdDelete)){
+                                System.out.println(oServices.deleteOrder(o));
+                                break;
+                            }
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
                         }
                     }
+                    System.out.println("Order doesn't exist");
                     break;
                 default:
                     System.out.println("Wrong option");

@@ -1,11 +1,7 @@
 package org.vshopping.model.order;
 
-import org.vshopping.model.person.Person;
-
 import java.util.List;
 
-//https://junit.org/junit5/
-//https://site.mockito.org/
 public class OrderServices {
 
     public String addOrder(Order order){

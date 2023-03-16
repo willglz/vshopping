@@ -21,10 +21,10 @@ public class EmployeeServices {
         return "Employee edited successfully";
     }
 
-    public String listCustomer(){
-        StringBuilder sbEmployees = new StringBuilder("No customers to show you");
+    public String listEmployee(){
+        StringBuilder sbEmployees = new StringBuilder("No employee to show you");
         for (Person employee : this.showEmployees()) {
-            sbEmployees.delete(0,24);
+            sbEmployees.delete(0,23);
             sbEmployees.append(employee.toString());
         }
         return sbEmployees.toString();
@@ -56,8 +56,13 @@ public class EmployeeServices {
         return e;
     }
 
-    public String deleteEmployee(Person person){
-        this.employeeDAO.deletePerson(person);
+    public String deleteEmployee(Employee employee){
+        if (employee.getId() == 1){
+            return "The first user cannot be deleted";
+        } else if (employee.getId() == Employee.getIdInLog()) {
+            return "You cannot delete yourself";
+        }
+        this.employeeDAO.deletePerson(employee);
         return "Employee deleted successfully";
     }
 

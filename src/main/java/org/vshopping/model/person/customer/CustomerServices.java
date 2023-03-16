@@ -44,13 +44,17 @@ public class CustomerServices {
         return c;
     }
 
-    public String deleteCustomer(Person person){
+    public String deleteCustomer(Customer customer){
         for (Order o: oServices.showOrders()){
-            if (person.equals(o.getCustomer())){
-                return "Cannot delete this customer 'cause is in an active order";
+            if (customer.equals(o.getCustomer())){
+                return "This customer cannot be deleted because it is in active order.";
             }
         }
-        this.customerDAO.deletePerson(person);
+        this.customerDAO.deletePerson(customer);
         return "Customer deleted successfully";
+    }
+
+    public boolean verifyCustomers(){
+        return this.customerDAO.getPerson().isEmpty();
     }
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MainCommand implements Command{
-    private final Map<String, Command> commands = new HashMap<>();
+    private Map<String, Command> commands = new HashMap<>();
 
     public MainCommand(){
         commands.put("0", new LogIn());

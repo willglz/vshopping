@@ -1,8 +1,5 @@
 package org.vshopping.model.product.videogames;
 
-import org.vshopping.model.person.Person;
-import org.vshopping.model.person.employee.Employee;
-import org.vshopping.model.person.employee.EmployeeDB;
 import org.vshopping.model.product.Product;
 import org.vshopping.model.product.ProductDAO;
 

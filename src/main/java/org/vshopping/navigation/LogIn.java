@@ -6,10 +6,10 @@ import org.vshopping.model.person.employee.EmployeeServices;
 import java.util.Scanner;
 
 public class LogIn implements Command{
-    EmployeeServices eServices = new EmployeeServices();
 
     @Override
     public void exec() {
+        EmployeeServices eServices = new EmployeeServices();
         Scanner sc = new Scanner(System.in);
         while (true){
             System.out.println("LOGIN MENU");

@@ -1,7 +1,5 @@
 package org.vshopping.navigation;
 
-import org.vshopping.model.person.Person;
-import org.vshopping.model.person.employee.Employee;
 import org.vshopping.model.product.Product;
 import org.vshopping.model.product.videogames.vGames;
 import org.vshopping.model.product.videogames.vGamesServices;
@@ -54,44 +52,58 @@ public class GamesCommand implements Command{
                 case "4":
                     System.out.println("Enter the game ID to search");
                     String idGamToS = sc.nextLine();
-                    if (gameServices.findGameById(idGamToS) != null){
-                        System.out.println(gameServices.findGameById(idGamToS));
+                    try{
+                        if (gameServices.findGameById(idGamToS) != null){
+                            System.out.println(gameServices.findGameById(idGamToS));
+                        }
+                    }catch (NumberFormatException e){
+                        System.out.println("Wrong ID");
                     }
                     System.out.println("Game doesn't exist");
                     break;
                 case "5":
                     System.out.println("Enter the game ID to modify");
-                    int idGam = sc.nextInt();
+                    String idGam = sc.nextLine();
                     for(Product p: gameServices.showGames()){
-                        if (p != null && p.getId() == idGam){
-                            sc.nextLine();
-                            System.out.println(gameServices.findGameById(String.valueOf(idGam)));
-                            System.out.println("Game found!!\nEnter de new data for this employee");
-                            System.out.print("First name: ");
-                            System.out.print("Title: ");
-                            String title2m = sc.nextLine();
-                            System.out.print("Price: ");
-                            double price2m = sc.nextDouble();
-                            System.out.print("Platform: ");
-                            String platform2m = sc.nextLine();
-                            System.out.print("Genre: ");
-                            String genre2m = sc.nextLine();
-                            System.out.print("Stock: ");
-                            int stock2m = sc.nextInt();
-                            p = new vGames(idGam ,title2m, price2m, platform2m, genre2m, stock2m);
-                            System.out.println(gameServices.editGame((vGames) p));
+                        try{
+                            if (p != null && p.getId() == Integer.parseInt(idGam)){
+                                sc.nextLine();
+                                System.out.println(gameServices.findGameById(idGam));
+                                System.out.println("Game found!!\nEnter de new data for this employee");
+                                System.out.print("First name: ");
+                                System.out.print("Title: ");
+                                String title2m = sc.nextLine();
+                                System.out.print("Price: ");
+                                double price2m = sc.nextDouble();
+                                System.out.print("Platform: ");
+                                String platform2m = sc.nextLine();
+                                System.out.print("Genre: ");
+                                String genre2m = sc.nextLine();
+                                System.out.print("Stock: ");
+                                int stock2m = sc.nextInt();
+                                p = new vGames(Integer.parseInt(idGam) ,title2m, price2m, platform2m, genre2m, stock2m);
+                                System.out.println(gameServices.editGame((vGames) p));
+                            }
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
                         }
                     }
+                    System.out.println("Game doesn't exist");
                     break;
                 case "6":
                     System.out.println("Enter the game ID to delete");
-                    int idGamtoDelete = sc.nextInt();
+                    String idGamtoDelete = sc.nextLine();
                     for(Product p: gameServices.showGames()){
-                        if (p != null && p.getId() == idGamtoDelete){
-                            System.out.println(gameServices.deleteGame(p));
-                            break;
+                        try {
+                            if (p != null && p.getId() == Integer.parseInt(idGamtoDelete)){
+                                System.out.println(gameServices.deleteGame((vGames) p));
+                                break;
+                            }
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
                         }
                     }
+                    System.out.println("Game doesn't exist");
                     break;
                 default:
                     System.out.println("Wrong option");

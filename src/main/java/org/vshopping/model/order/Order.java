@@ -47,7 +47,7 @@ public class Order {
         details += "\nOrder ID: " + this.id;
         details += "\nCustomer: " + this.customer.getFirstName() + " " + this.customer.getLastName();
         details += "\nGame: " + this.games.getName();
-        details += "\nShipping: " + this.shipping;
+        details += "\nShipping: " + this.shipping.getClass().getName();
         details += "\nDate: " + this.getDate();
         details += "\n---------------------";
         return details;

@@ -1,6 +1,5 @@
 package org.vshopping.model.product.videogames;
 
-import org.vshopping.model.person.Person;
 import org.vshopping.model.product.Product;
 
 import java.util.List;
@@ -53,8 +52,12 @@ public class vGamesServices {
         return v;
     }
 
-    public String deleteGame(Product product){
-        GAMES_DAO.deleteProduct(product);
+    public String deleteGame(vGames vGames){
+        GAMES_DAO.deleteProduct(vGames);
         return "Game deleted successfully";
+    }
+
+    public boolean verifyGames(){
+        return this.showGames().isEmpty();
     }
 }

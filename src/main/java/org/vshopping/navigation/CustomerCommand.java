@@ -45,39 +45,48 @@ public class CustomerCommand implements Command{
                 case "3":
                     System.out.println("Enter the employee ID to search");
                     String idCusToS = sc.nextLine();
-                    if (cServices.findCustomerById(idCusToS) != null){
-                        System.out.println(cServices.findCustomerById(idCusToS));
-                    }
+                    try{
+                        if (cServices.findCustomerById(idCusToS) != null){
+                            System.out.println(cServices.findCustomerById(idCusToS));
+                        }
+                    }catch (NumberFormatException e){System.out.println("Wrong ID");}
                     System.out.println("Customer doesn't exist");
                     break;
                 case "4":
                     System.out.println("Enter the Customer ID to modify");
-                    int idCus = sc.nextInt();
+                    String idCus = sc.nextLine();
                     for(Person p: cServices.getCustomers()){
-                        if (p != null && p.getId() == idCus){
-                            sc.nextLine();
-                            System.out.println(cServices.findCustomerById(String.valueOf(idCus)));
-                            System.out.println("Customer found!!\nEnter de new data for this customer");
-                            System.out.print("First name: ");
-                            String fn2m = sc.nextLine();
-                            System.out.print("Last name: ");
-                            String ln2m = sc.nextLine();
-                            System.out.print("Address: ");
-                            String ad2m = sc.nextLine();
-                            System.out.print("Email: ");
-                            String mail2m = sc.nextLine();
-                            p = new Customer(idCus ,fn2m, ln2m, ad2m, mail2m);
-                            System.out.println(cServices.editCustomer((Customer) p));
-                        }
+                        try {
+                            if (p != null && p.getId() == Integer.parseInt(idCus)){
+                                sc.nextLine();
+                                System.out.println(cServices.findCustomerById(idCus));
+                                System.out.println("Customer found!!\nEnter de new data for this customer");
+                                System.out.print("First name: ");
+                                String fn2m = sc.nextLine();
+                                System.out.print("Last name: ");
+                                String ln2m = sc.nextLine();
+                                System.out.print("Address: ");
+                                String ad2m = sc.nextLine();
+                                System.out.print("Email: ");
+                                String mail2m = sc.nextLine();
+                                p = new Customer(Integer.parseInt(idCus) ,fn2m, ln2m, ad2m, mail2m);
+                                System.out.println(cServices.editCustomer((Customer) p));
+                            }
+                        }catch (NumberFormatException e){System.out.println("Wrong ID");}
                     }
+                    System.out.println("Customer doesn't exist");
                     break;
                 case "5":
                     System.out.println("Enter the Customer ID to delete");
                     String idCusToDelete = sc.nextLine();
                     for(Person p: cServices.getCustomers()){
-                        if (p != null && p.getId() == Integer.parseInt(idCusToDelete)){
-                            System.out.println(cServices.deleteCustomer(p));
-                            break;
+                        try{
+                            if (p != null && p.getId() == Integer.parseInt(idCusToDelete)){
+                                System.out.println(cServices.deleteCustomer((Customer) p));
+                                break;
+                            }
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
                         }
                     }
                     System.out.println("Customer doesn't exist");
