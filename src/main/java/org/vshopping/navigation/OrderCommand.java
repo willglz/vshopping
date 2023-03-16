@@ -39,19 +39,27 @@ public class OrderCommand implements Command{
                     if (!(vServices.verifyGames() || cServices.verifyCustomers())){
                         System.out.println(cServices.listCustomer());
                         System.out.println("Enter the Customer ID: ");
-                        int idC = sc.nextInt();
+                        String idC = sc.nextLine();
                         System.out.println(vServices.listAvailableGames());
                         System.out.print("Enter the Game ID: ");
-                        int idG = sc.nextInt();
-                        vServices.findGameById(String.valueOf(idG)).setStock(vServices.findGameById(String.valueOf(idG)).getStock() - 1);
+                        String idG = sc.nextLine();
+                        try {
+                            vServices.findGameById(String.valueOf(idG)).setStock(vServices.findGameById(String.valueOf(idG)).getStock() - 1);
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
+                        }
                         System.out.println("Select delivery method\n1 - Home Delivery\n2 - Pick up at the store");
-                        int delOpt = sc.nextInt();
-                        if (delOpt == 1){
+                        String delOpt = sc.nextLine();
+                        if (delOpt.equals("1")){
                             shipping = new Ground();
                         }
-                        Order order = new Order(cServices.findCustomerById(String.valueOf(idC)), vServices.findGameById(String.valueOf(idG)),
-                                shipping, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())), new Date());
-                        System.out.println(oServices.addOrder(order));
+                        try {
+                            Order order = new Order(cServices.findCustomerById(idC), vServices.findGameById(idG),
+                                    shipping, eServices.findEmployeeById(String.valueOf(Employee.getIdInLog())), new Date());
+                            System.out.println(oServices.addOrder(order));
+                        }catch (NumberFormatException e){
+                            System.out.println("Wrong ID");
+                        }
                     }else {
                         System.out.println("No customers or games to book");
                     }

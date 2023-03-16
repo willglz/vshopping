@@ -3,7 +3,10 @@ package org.vshopping.navigation;
 import org.vshopping.model.product.Product;
 import org.vshopping.model.product.videogames.vGames;
 import org.vshopping.model.product.videogames.vGamesServices;
+import org.vshopping.utils.validators.NumberValidator;
+import org.vshopping.utils.validators.StringValidator;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class GamesCommand implements Command{
@@ -31,16 +34,42 @@ public class GamesCommand implements Command{
                 case "1":
                     System.out.print("Title: ");
                     String title = sc.nextLine();
+                    if (StringValidator.isBlankValidator(title) ||
+                            StringValidator.isEmptyValidator(title) ||
+                            StringValidator.longValidator(title)){
+                        System.out.println("Title is blank, empty or short long");
+                        break;
+                    }
                     System.out.print("Price: ");
-                    double price = sc.nextDouble();
-                    sc.nextLine();
+                    String price = sc.nextLine();
+                    if (!NumberValidator.greaterThanZero(Double.parseDouble(price)) ||
+                            !NumberValidator.priceChecker(Double.parseDouble(price))){
+                        System.out.println("Price must be greater than zero and $10");
+                        break;
+                    }
                     System.out.print("Platform: ");
                     String platform = sc.nextLine();
+                    if (StringValidator.isBlankValidator(platform) ||
+                            StringValidator.isEmptyValidator(platform) ||
+                            StringValidator.longValidator(platform)){
+                        System.out.println("Platform is blank, empty or short long");
+                        break;
+                    }
                     System.out.print("Genre: ");
                     String genre = sc.nextLine();
+                    if (StringValidator.isBlankValidator(genre) ||
+                            StringValidator.isEmptyValidator(genre) ||
+                            StringValidator.longValidator(genre)){
+                        System.out.println("Genre is blank, empty or short long");
+                        break;
+                    }
                     System.out.print("Stock: ");
                     int stock = sc.nextInt();
-                    vGames game = new vGames(title, price, platform, genre, stock);
+                    if (!NumberValidator.greaterThanZero(stock)){
+                        System.out.println("Stock must be greater than zero and $10");
+                        break;
+                    }
+                    vGames game = new vGames(title, Double.parseDouble(price), platform, genre, stock);
                     System.out.println(gameServices.addGame(game));
                     break;
                 case "2":
@@ -81,7 +110,8 @@ public class GamesCommand implements Command{
                                 String genre2m = sc.nextLine();
                                 System.out.print("Stock: ");
                                 int stock2m = sc.nextInt();
-                                p = new vGames(Integer.parseInt(idGam) ,title2m, price2m, platform2m, genre2m, stock2m);
+                                p = new vGames(Integer.parseInt(idGam) ,title2m, price2m, platform2m,
+                                        genre2m, stock2m);
                                 System.out.println(gameServices.editGame((vGames) p));
                             }
                         }catch (NumberFormatException e){

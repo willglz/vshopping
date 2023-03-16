@@ -43,13 +43,24 @@ public class Order {
 
     @Override
     public String toString() {
-        String details = "---------------------";
-        details += "\nOrder ID: " + this.id;
-        details += "\nCustomer: " + this.customer.getFirstName() + " " + this.customer.getLastName();
-        details += "\nGame: " + this.games.getName();
-        details += "\nShipping: " + this.shipping.getClass().getName();
-        details += "\nDate: " + this.getDate();
-        details += "\n---------------------";
-        return details;
+        try{
+            String details = "---------------------";
+            details += "\nOrder ID: " + this.id;
+            details += "\nCustomer: " + this.customer.getFirstName() + " " + this.customer.getLastName();
+            details += "\nGame: " + this.games.getName();
+            details += "\nShipping: " + this.shipping.getClass().getName();
+            details += "\nDate: " + this.getDate();
+            details += "\n---------------------";
+            return details;
+        }catch (NullPointerException e){
+            String details = "---------------------";
+            details += "\nOrder ID: " + this.id;
+            details += "\nCustomer: " + this.customer.getFirstName() + " " + this.customer.getLastName();
+            details += "\nGame: " + this.games.getName();
+            details += "\nShipping: Pick up at store";
+            details += "\nDate: " + this.getDate();
+            details += "\n---------------------";
+            return details;
+        }
     }
 }
