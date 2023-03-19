@@ -1,9 +1,5 @@
 package org.vshopping.model.order;
 
-import org.vshopping.model.person.Person;
-import org.vshopping.model.person.customer.Customer;
-import org.vshopping.model.person.customer.CustomerDB;
-
 import java.util.List;
 
 public class OrderDAO {

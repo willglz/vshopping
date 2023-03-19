@@ -7,8 +7,13 @@ import org.vshopping.model.person.Person;
 import java.util.List;
 
 public class CustomerServices {
-    private CustomerDAO customerDAO = new CustomerDAO();
-    private OrderServices oServices = new OrderServices();
+    private final CustomerDAO customerDAO;
+    private final OrderServices oServices;
+
+    public CustomerServices(CustomerDAO cDAO, OrderServices oS){
+        this.customerDAO = cDAO;
+        this.oServices = oS;
+    }
 
     public String addCustomer(Customer customer){
         this.customerDAO.savePerson(customer);

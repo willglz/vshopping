@@ -36,7 +36,7 @@ public class MainCommand implements Command{
 
             Command command = commands.get(opt);
             if (command == null) {
-                System.out.println("Invalid option");
+                System.out.println("Wrong option");
             } else {
                 command.exec();
             }

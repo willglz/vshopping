@@ -1,24 +1,29 @@
 package org.vshopping.model.person.customer;
 
+import org.vshopping.model.data.DataSource;
 import org.vshopping.model.person.Person;
 import org.vshopping.model.person.PersonDAO;
 
 import java.util.List;
 
 public class CustomerDAO implements PersonDAO {
+    private DataSource<Person> ds;
+    public CustomerDAO(DataSource<Person> ds){
+        this.ds = ds;
+    }
     @Override
     public void savePerson(Person person) {
-        CustomerDB.getDataSource().add(person);
+        ds.getDataSource().add(person);
     }
 
     @Override
     public List<Person> getPerson() {
-        return CustomerDB.getDataSource();
+        return ds.getDataSource();
     }
 
     @Override
     public void deletePerson(Person person) {
-        CustomerDB.getDataSource().remove(person);
+        ds.getDataSource().remove(person);
     }
 
     @Override
