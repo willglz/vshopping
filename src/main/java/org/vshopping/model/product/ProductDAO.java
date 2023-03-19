@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface ProductDAO {
     void saveProduct(Product products);
-    Product searchProductById(int id);
     List<Product> getProducts();
-    void deleteProduct(int id);
+    void deleteProduct(Product product);
     void editProduct(Product products);
 }

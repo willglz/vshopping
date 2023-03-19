@@ -1,8 +1,9 @@
 package org.vshopping.model.person;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
+@EqualsAndHashCode
 public abstract class Person {
     @Setter @Getter
     private int id;

@@ -1,8 +1,9 @@
 package org.vshopping.model.person.customer;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.vshopping.model.person.Person;
-
+@EqualsAndHashCode
 public class Customer extends Person {
     @Getter
     private int id;
@@ -28,6 +29,4 @@ public class Customer extends Person {
         details += "\n---------------------";
         return details;
     }
-
-
 }

@@ -1,41 +1,35 @@
 package org.vshopping.model.person.customer;
 
+import org.vshopping.model.data.DataSource;
 import org.vshopping.model.person.Person;
 import org.vshopping.model.person.PersonDAO;
 
 import java.util.List;
 
 public class CustomerDAO implements PersonDAO {
+    private DataSource<Person> ds;
+    public CustomerDAO(DataSource<Person> ds){
+        this.ds = ds;
+    }
     @Override
     public void savePerson(Person person) {
-        CustomerDB.getDataSource().add(person);
-    }
-
-    @Override
-    public Person searchPersonById(int id) {
-        Customer c = null;
-        for (Person person : CustomerDB.getDataSource()) {
-            if (person != null && person.getId() == id){
-                c = (Customer) person;
-                break;
-            }
-        }
-        return c;
+        ds.getDataSource().add(person);
     }
 
     @Override
     public List<Person> getPerson() {
-        return CustomerDB.getDataSource();
+        return ds.getDataSource();
     }
 
     @Override
-    public void deletePerson(int id) {
-        CustomerDB.getDataSource().remove(this.searchPersonById(id));
+    public void deletePerson(Person person) {
+        ds.getDataSource().remove(person);
     }
 
     @Override
     public void editPerson(Person person) {
-        Customer c = (Customer) this.searchPersonById(person.getId());
+        CustomerServices temp = new CustomerServices();
+        Customer c = temp.findCustomerById(String.valueOf(person.getId()));
         c.setFirstName(person.getFirstName());
         c.setLastName(person.getLastName());
         c.setAddress(person.getAddress());
