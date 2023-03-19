@@ -39,14 +39,7 @@ public class CustomerServices {
     }
 
     public Customer findCustomerById(String id){
-        Customer c = null;
-        for (Person person : this.getCustomers()) {
-            if (person != null && person.getId() == Integer.parseInt(id)){
-                c = (Customer) person;
-                break;
-            }
-        }
-        return c;
+        return (Customer) customerDAO.findPersonById(id);
     }
 
     public String deleteCustomer(Customer customer){

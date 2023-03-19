@@ -131,6 +131,5 @@ public class OrderCommand implements Command{
                     break;
             }
         }
->>>>>>> 889eeb85e2029aaa9a22becc5fb20551b81abb64
     }
 }
